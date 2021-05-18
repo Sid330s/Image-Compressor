@@ -83,13 +83,13 @@ def compress():
 		print(y)
 		compression=x+y+compression
 		print(len(compression))
-		file = open("compressed.txt", "w")
-		file.write(bitstring_to_bytes(compression).decode("utf-8"))
+		file = open("compressed.bin", "wb")
+		file.write(bitstring_to_bytes(compression))
 		if(len(compression)>300):
 			print(compression[:200])
 		print("......")
-		response=make_response(send_from_directory('.','compressed.txt'))
-		response.headers["Content-Disposition"]="attachment; filename=compressed.txt"
+		response=make_response(send_from_directory('.','compressed.bin'))
+		response.headers["Content-Disposition"]="attachment; filename=compressed.bin"
 		return response
 		#return render_template('index.html',u="Image Uploaded!",c="DECOMPRESS!",ul='/decompressed')
 	return "TEEHEE"
@@ -108,7 +108,7 @@ def decompress():
 		global s
 		global p
 		d=[]
-		with open('compressed.txt','r') as file:
+		with open('compressed.bin','rb') as file:
 			byte = file.read()
 			print("yy")
 			compression=str(bin(int.from_bytes(byte, byteorder="big")))[3:]
