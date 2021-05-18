@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>DS project</title>
+    <link href="{{ url_for('static', filename='styles/ind.css') }}" rel="stylesheet"/>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+    <h2>Image To Bin:</h2>
+    <div class="container">
+          <form  action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+          <div class="form-group container">
+          <label for="exampleFormControlFile1">Select image to upload:</label>
+          <br>
+          <input type="submit" value="{{ u }}" name="submit" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+          </form>
+          <form action="/compressed" method="post">
+              <button type="button" class="btn btn-primary">COMPRESS!</button>
+          </form>
+    </div>
+    <h2>Bin To Img:</h2>
+    <div class="container">
+          <form  action='/decomupload' method="post" enctype="multipart/form-data">
+          <div class="form-group container">
+          <label for="exampleFormControlFile1">Select image to upload:</label>
+          <br>
+          <input type="submit" value="{{ u }}" name="submit" class="form-control-file" id="exampleFormControlFile1">
+          </div>
+          </form>
+          <form action="/decompressed" method="post">
+              <button type="button" class="btn btn-primary">DECOMPRESS!</button>
+          </form>
+    </div>
+</div>
+
+  </body>
+</html>

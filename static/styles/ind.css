@@ -29,8 +29,10 @@ p{
 }
 .c_3{
   position: absolute;
-  top:150px;
+  top:200px;
   left:140px;
+  right:150px;
+  bottom:150px;
 }
 .c_5{
   position: absolute;

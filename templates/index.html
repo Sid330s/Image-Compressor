@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>DS project</title>
+    <title>DAA project</title>
     <link href="{{ url_for('static', filename='styles/ind.css') }}" rel="stylesheet"/>
     <script type="text/javascript" src="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
     <script type="text/javascript">
@@ -27,12 +27,17 @@
     .c_5{
       position: absolute;
       top:150px;
-      left: 430px;
+      left: 630px;
+    }
+    .c_7{
+      position: absolute;
+      top:0px;
+      left: 130px;
     }
     .c_6{
       position: absolute;
       top: 150px;
-      left: 330px;
+      left: 130px;
     }
     #txtToUpload{
       position: absolute;
@@ -46,7 +51,7 @@
 
     <div class="c_1">
       <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
-      <p>Select image to upload:</p>
+      <p>SELECT IMAGE TO UPLOAD:</p>
       <p class="c_2"><input type="file" name="fileToUpload" id="fileToUpload">
       <input type="submit" value="{{ u }}" name="submit"></p>
       </form>
@@ -54,19 +59,16 @@
       <form action="/compressed" method="post">
     <button class="c_3">COMPRESS!</button>
     </form>
-    <form action='/decomupload' method="post" enctype="multipart/form-data">
+    <br>
+    <form  class="c_7" action='/decomupload' method="post" enctype="multipart/form-data">
     <input type="file" name="txtToUpload" id="txtToUpload">
-    <input type="submit" value="{{ l }}" name="submit" class=c_6>
+    <br>
+    <input type="submit" value="Upload Bin" name="submit" class=c_6>
+    <br>
     </form>
     <form action="/decompressed" method="post">
     <button class="c_5">DECOMPRESS!</button>
     </form>
-    <div class=c_4><img src="{{ url_for('static', filename='ws.png') }}" height="180px" width="400px"></div>
 </div>
-
-
-
-
-
   </body>
 </html>

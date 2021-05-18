@@ -22,7 +22,7 @@ get_bin = lambda x, n: format(x, 'b').zfill(n)
 def imgtotxt(str1):
 	from PIL import Image
 	from collections import Counter
-	im=Image.open(str1).convert('P')
+	im=Image.open(str1).convert('L')
 	data=list(im.getdata())
 	counts=Counter(data)
 	global l
@@ -44,6 +44,10 @@ def index():
 def upload_file():
 	if request.method=='POST':
 		f = request.files['fileToUpload']
+		s.clear()
+		p.clear()
+		dtbw.clear()
+		l.clear()
 		imgname=secure_filename(f.filename)
 		f.save(imgname)
 		imgtotxt(imgname)
@@ -79,12 +83,13 @@ def compress():
 		print(y)
 		compression=x+y+compression
 		print(len(compression))
-		file = open("compressed.bin", "wb")
-		file.write(bitstring_to_bytes(compression))
-		print(compression)
-		response=make_response(send_from_directory('.','compressed.bin'))
-		response.headers["Content-Disposition"]="attachment; filename=compressed.bin"
-		os.system('rm compressed.txt')
+		file = open("compressed.txt", "w")
+		file.write(bitstring_to_bytes(compression).decode("utf-8"))
+		if(len(compression)>300):
+			print(compression[:200])
+		print("......")
+		response=make_response(send_from_directory('.','compressed.txt'))
+		response.headers["Content-Disposition"]="attachment; filename=compressed.txt"
 		return response
 		#return render_template('index.html',u="Image Uploaded!",c="DECOMPRESS!",ul='/decompressed')
 	return "TEEHEE"
@@ -103,11 +108,14 @@ def decompress():
 		global s
 		global p
 		d=[]
-		with open('compressed.bin','rb') as file:
+		with open('compressed.txt','r') as file:
 			byte = file.read()
 			print("yy")
 			compression=str(bin(int.from_bytes(byte, byteorder="big")))[3:]
 			print(len(compression))
+			if(len(compression)>300):
+				print(compression[:200])
+			print("......")
 			x = int(compression[:32],2)
 			y = int(compression[32:64],2)
 			compression=compression[64:]
@@ -123,6 +131,7 @@ def decompress():
 			d.append(str(size))
 			open('decompressed.txt','w').writelines(d)
 			txttoimg.txttoimg('decompressed.txt')
+			os.system('del /f decompressed.txt')
 			response=make_response(send_from_directory('.','test.jpg'))
 			response.headers["Content-Disposition"]="attachment; filename=your_image.jpg"
 			return response
